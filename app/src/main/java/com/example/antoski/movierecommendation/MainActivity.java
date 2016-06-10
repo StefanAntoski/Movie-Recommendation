@@ -17,8 +17,6 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    SQLiteDatabase db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,32 +24,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Toast.makeText(MainActivity.this, "Pre opening", Toast.LENGTH_SHORT).show();
-
-        db = openOrCreateDatabase("MoviesDB", MODE_PRIVATE, null);
-
-        Toast.makeText(MainActivity.this, "Opening", Toast.LENGTH_SHORT).show();
-
-        Cursor c = db.rawQuery("select name from MoviesDB", null);
-
-        Toast.makeText(MainActivity.this, "Cursor", Toast.LENGTH_SHORT).show();
-
-        String res = "";
-
-        while(c.moveToNext()) {
-            res += "/n" + c.getString(0);
-        }
-
-        Toast.makeText(MainActivity.this, "Getting Data", Toast.LENGTH_SHORT).show();
-
         TextView tw = (TextView)findViewById(R.id.target);
 
-        tw.setText(res);
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+        String names = databaseAccess.getFilmNames();
+        databaseAccess.close();
 
-        Toast.makeText(MainActivity.this, "Setting Data", Toast.LENGTH_SHORT).show();
-
-        c.close();
-        db.close();
+        tw.setText(names);
     }
 
     @Override
