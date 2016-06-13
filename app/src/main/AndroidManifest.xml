@@ -22,6 +22,12 @@
         <service
             android:name=".getSimilar"
             android:exported="false" />
+
+        <activity android:name=".Splash" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+            <intent-filter>
+
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
