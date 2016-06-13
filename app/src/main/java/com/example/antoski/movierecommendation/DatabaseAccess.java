@@ -74,8 +74,8 @@ public class DatabaseAccess {
 
     public List<Film> recommendMoviesByGenre(String genre) {
         List<Film> res = new ArrayList<>();
-        String sqlCommand = "select MoviesDB.id, MoviesDB.name, MoviesDB.year" +
-                " from MoviesDB, MoviesGenres " +
+        String sqlCommand = "select MoviesDB.id, MoviesDB.name, MoviesDB.year " +
+                "from MoviesDB, MoviesGenres " +
                 "where MoviesDB.id=MoviesGenres.id and MoviesDB.recommend=0 and MoviesGenres.genre='" + genre + "'";
         Cursor cursor = database.rawQuery(sqlCommand, null);
         cursor.moveToFirst();
@@ -87,4 +87,73 @@ public class DatabaseAccess {
         cursor.close();
         return res;
     }
+
+    public List<Film> recommendMoviesByYear(int year) {
+        List<Film> res = new ArrayList<>();
+        String sqlCommand = "select id, name, year " +
+                "from MoviesDB " +
+                "where recommend=0 and year=" + year + "";
+        Cursor cursor = database.rawQuery(sqlCommand, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Film film = new Film(cursor.getString(0), cursor.getString(1), cursor.getInt(2));
+            res.add(film);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return res;
+    }
+
+    public Film getFilmByName(String name) {
+        String sqlCommand = "select id, name, year " +
+                "from MovieDB " +
+                "where name='" + name + "'";
+        Cursor cursor = database.rawQuery(sqlCommand, null);
+        cursor.moveToFirst();
+        Film film = new Film(cursor.getString(0), cursor.getString(1), cursor.getInt(2));
+        cursor.close();
+        return film;
+    }
+
+    public void setRecommended(String id) {
+        String sqlCommand = "update MoviesDB " +
+                "set recommend=1 " +
+                "where id='" + id + "'";
+        database.execSQL(sqlCommand);
+    }
+
+    public boolean isRecommended(String id) {
+        String sqlCommand = "select recommend " +
+                "from MoviesDB " +
+                "where id='" + id + "'";
+        Cursor cursor = database.rawQuery(sqlCommand, null);
+        cursor.moveToFirst();
+        boolean isRec;
+        if (cursor.getInt(0) == 0)
+            isRec = false;
+        else
+            isRec = true;
+        return isRec;
+    }
+
+    public void insertMovieLiked(String id, String name) {
+        String sqlCommand = "insert into MoviesLiked " +
+                "values('" + id + "', '" + name + "')";
+        database.execSQL(sqlCommand);
+    }
+
+    /*public List<Film> getLikedMovies() {
+        List<Film> res = new ArrayList<>();
+        String sqlCommand = "select * " +
+                "from MoviesLiked";
+        Cursor cursor = database.rawQuery(sqlCommand, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Film film = new Film(cursor.getString(0), cursor.getString(1), cursor.getInt(2));
+            res.add(film);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return res;
+    }*/
 }
