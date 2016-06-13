@@ -3,10 +3,14 @@ package com.example.antoski.movierecommendation;
 /**
  * Created by krpet on 10.6.2016.
  */
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;
@@ -62,6 +66,22 @@ public class DatabaseAccess {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             res += cursor.getString(0) + "\n";
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return res;
+    }
+
+    public List<Film> recommendMoviesByGenre(String genre) {
+        List<Film> res = new ArrayList<>();
+        String sqlCommand = "select MoviesDB.id, MoviesDB.name, MoviesDB.year" +
+                " from MoviesDB, MoviesGenres " +
+                "where MoviesDB.id=MoviesGenres.id and MoviesDB.recommend=0 and MoviesGenres.genre='" + genre + "'";
+        Cursor cursor = database.rawQuery(sqlCommand, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Film film = new Film(cursor.getString(0), cursor.getString(1), cursor.getInt(2));
+            res.add(film);
             cursor.moveToNext();
         }
         cursor.close();

@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,10 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
-        String names = databaseAccess.getFilmNames();
+
+        List<Film> films = databaseAccess.recommendMoviesByGenre("Comedy");
+        String res = "";
+
+        for(int i = 0; i < films.size(); i++) {
+            res += films.get(i).toString() + "\n";
+        }
+
         databaseAccess.close();
 
-        tw.setText(names);
+        tw.setText(res);
     }
 
     @Override
