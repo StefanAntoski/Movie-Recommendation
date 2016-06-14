@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">Movie Pal</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="genres_array">
+        <item>Adventure</item>
+        <item>Family</item>
+        <item>Earth</item>
+        <item>Fantasy</item>
+        <item>Action</item>
+        <item>Sci-Fi</item>
+        <item>Animation</item>
+        <item>Comedy</item>
+        <item>Drama</item>
+        <item>Thriller</item>
+        <item>Biography</item>
+        <item>History</item>
+        <item>Crime</item>
+        <item>Mystery</item>
+        <item>Music</item>
+        <item>Western</item>
+        <item>Sport</item>
+    </string-array>
+
 </resources>

@@ -13,12 +13,12 @@
     tools:showIn="@layout/activity_main">
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,6 +29,7 @@
         android:layout_below="@+id/spinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="53dp" />
+
 
 
 </RelativeLayout>
