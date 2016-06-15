@@ -1,5 +1,6 @@
 package com.example.antoski.movierecommendation;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, ReportProblem.class);
+            this.startActivity(intent);
             return true;
         }
 
