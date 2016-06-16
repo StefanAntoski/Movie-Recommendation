@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
+
+        Intent intent = new Intent(this, TestCards.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override()

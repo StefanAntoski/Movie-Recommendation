@@ -21,5 +21,6 @@
         <item>Western</item>
         <item>Sport</item>
     </string-array>
+    <string name="title_activity_test_cards">TestCards</string>
 
 </resources>
