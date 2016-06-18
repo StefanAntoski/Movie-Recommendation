@@ -27,4 +27,5 @@ dependencies {
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.daprlabs.aaron:cardstack:0.3.0'
     compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

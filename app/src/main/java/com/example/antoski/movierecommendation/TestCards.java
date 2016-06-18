@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,16 +21,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daprlabs.cardstack.SwipeDeck;
+import com.squareup.picasso.Picasso;
 
+import junit.framework.Test;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestCards extends AppCompatActivity {
-
+    private Context MyContext;
     public int n = 0;
-
+    public String LinkDoSlikaString;
+    public List<String> LinkDoSlika;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +60,12 @@ public class TestCards extends AppCompatActivity {
             }
         });
 
+        MyContext = this;
+
+
         SwipeDeck cardStack = (SwipeDeck) findViewById(R.id.swipe_deck);
 
-
-
-
-
+        LinkDoSlika = new ArrayList<>();
 
         final ArrayList<String> testData = new ArrayList<>();
         testData.add(Integer.toString(n++));
@@ -60,10 +74,10 @@ public class TestCards extends AppCompatActivity {
         testData.add(Integer.toString(n++));
         testData.add(Integer.toString(n++));
 
-        String url = "http://ia.media-imdb.com/images/M/MV5BNzQ0NDgwODQ3NV5BMl5BanBnXkFtZTgwOTYxNjc2ODE@._V1_UX182_CR0,0,182,268_AL_.jpg";
-
-
-
+        LinkDoSlikaString = null;
+        URL urll = null;
+        String ProbaUrl = null;
+        new JSONTask().execute(urll);
 
         Button button = (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +87,12 @@ public class TestCards extends AppCompatActivity {
             }
         });
 
-        final SwipeDeckAdapter adapter = new SwipeDeckAdapter(testData, this, url, cardStack);
+        while(LinkDoSlikaString == null){
+
+
+        }
+        Toast.makeText(MyContext,"Zavrsen While",Toast.LENGTH_LONG).show();
+        final SwipeDeckAdapter adapter = new SwipeDeckAdapter(testData, this, LinkDoSlika, cardStack);
         cardStack.setAdapter(adapter);
 
 
@@ -110,26 +129,16 @@ public class TestCards extends AppCompatActivity {
 
 
 
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "Poster");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
 
     public class SwipeDeckAdapter extends BaseAdapter {
 
         private List<String> data;
-        private String url;
+        private List<String> url;
         private Context context;
         private int pos;
         private SwipeDeck deck;
 
-        public SwipeDeckAdapter(List<String> data, Context context, String url, SwipeDeck deck) {
+        public SwipeDeckAdapter(List<String> data, Context context, List<String> url, SwipeDeck deck) {
             this.data = data;
             this.context = context;
             this.url = url;
@@ -167,11 +176,13 @@ public class TestCards extends AppCompatActivity {
             ImageView slikaa = (ImageView)v.findViewById(R.id.PosterSlika);
 
 
-            slikaa.setImageDrawable(LoadImageFromWebOperations(url));
+     //       slikaa.setImageDrawable(LoadImageFromWebOperations(url));
 
            // new DownloadFilmInfoTask(slikaa, v, context).execute(url);
             // slikaa.setImageResource(R.drawable.moviepalsplash);
-    //        Picasso.with(getApplicationContext()).load(R.drawable.moviepalsplash).error(R.mipmap.ic_launcher).into(slikaa);
+            Picasso.with(getApplicationContext()).load(url.get(pos)).error(R.mipmap.ic_launcher).placeholder(R.drawable.moviepalsplash).fit().into(slikaa);
+
+
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -185,4 +196,92 @@ public class TestCards extends AppCompatActivity {
         }
     }
 
+
+    public class JSONTask extends AsyncTask<URL,String,String> {
+
+        private DatabaseAccess databaseAccess;
+        @Override
+        protected String doInBackground(URL... params) {
+
+            BufferedReader reader = null;
+            databaseAccess = DatabaseAccess.getInstance(MyContext);
+            databaseAccess.open();
+            String[] idd = new String[100];
+            HttpURLConnection connection = null;
+            List<Film> films;
+          //
+
+            films = databaseAccess.recommendMoviesByGenre("Adventure");
+            for(int i = 0; i < films.size(); i++) {
+                idd[i] = films.get(i).id;
+            }
+            URL url = null;
+
+
+            for(int i =0;i < films.size();i++) {
+                String link = "http://www.omdbapi.com/?i="+idd[i]+"&plot=short&r=json";
+
+
+                try {
+                    url = new URL(link);
+                    connection = (HttpURLConnection) url.openConnection();
+
+                    connection.connect();
+
+                    InputStream stream = connection.getInputStream();
+
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+                    String line = "";
+
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+                    String finalJson = buffer.toString();
+                    JSONObject parentObject = new JSONObject(finalJson);
+                    String IzvadenoOdJsonURL = parentObject.getString("Poster");
+                    LinkDoSlika.add(i,IzvadenoOdJsonURL);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+
+                    try {
+
+                        reader.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            databaseAccess.close();
+            LinkDoSlikaString = "Yes";
+            return null;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+  //    Toast.makeText(MyContext,kk,Toast.LENGTH_LONG).show();
+          //  findViewById(R.id.swipe_deck).invalidate();
+           // findViewById(R.id.PosterSlika).invalidate();
+        }
+
+    }
+
 }
+
+
