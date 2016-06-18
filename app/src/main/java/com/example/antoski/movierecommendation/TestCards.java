@@ -1,6 +1,7 @@
 package com.example.antoski.movierecommendation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -50,6 +52,11 @@ public class TestCards extends AppCompatActivity {
         setContentView(R.layout.activity_test_cards);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setLogo(R.mipmap.ic_launcher);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -68,11 +75,20 @@ public class TestCards extends AppCompatActivity {
         LinkDoSlika = new ArrayList<>();
 
         final ArrayList<String> testData = new ArrayList<>();
-        testData.add(Integer.toString(n++));
-        testData.add(Integer.toString(n++));
-        testData.add(Integer.toString(n++));
-        testData.add(Integer.toString(n++));
-        testData.add(Integer.toString(n++));
+
+
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(MyContext);
+        databaseAccess.open();
+        List<Film> film = databaseAccess.recommendMoviesByGenre(MainActivity.getGenre());
+
+        for(int i=0;i<film.size();i++)
+        {
+            testData.add(film.get(i).toString());
+
+
+        }
+    databaseAccess.close();
+
 
         LinkDoSlikaString = null;
         URL urll = null;
@@ -91,7 +107,6 @@ public class TestCards extends AppCompatActivity {
 
 
         }
-        Toast.makeText(MyContext,"Zavrsen While",Toast.LENGTH_LONG).show();
         final SwipeDeckAdapter adapter = new SwipeDeckAdapter(testData, this, LinkDoSlika, cardStack);
         cardStack.setAdapter(adapter);
 
@@ -127,6 +142,21 @@ public class TestCards extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Finish activity.
+                Intent intent = new Intent(MyContext,MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 
 
 
@@ -137,7 +167,6 @@ public class TestCards extends AppCompatActivity {
         private Context context;
         private int pos;
         private SwipeDeck deck;
-
         public SwipeDeckAdapter(List<String> data, Context context, List<String> url, SwipeDeck deck) {
             this.data = data;
             this.context = context;
@@ -199,6 +228,9 @@ public class TestCards extends AppCompatActivity {
 
     public class JSONTask extends AsyncTask<URL,String,String> {
 
+
+        private MainActivity PristapiZanr;
+
         private DatabaseAccess databaseAccess;
         @Override
         protected String doInBackground(URL... params) {
@@ -210,8 +242,9 @@ public class TestCards extends AppCompatActivity {
             HttpURLConnection connection = null;
             List<Film> films;
           //
+           String zanr =  MainActivity.getGenre();
 
-            films = databaseAccess.recommendMoviesByGenre("Adventure");
+            films = databaseAccess.recommendMoviesByGenre(zanr);
             for(int i = 0; i < films.size(); i++) {
                 idd[i] = films.get(i).id;
             }

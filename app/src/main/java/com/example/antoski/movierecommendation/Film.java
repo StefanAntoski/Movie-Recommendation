@@ -21,6 +21,7 @@ public class Film {
 
     @Override
     public String toString() {
-        return id + " " + name + " " + year;
+        return name + " (" + year +")";
+
     }
 }
