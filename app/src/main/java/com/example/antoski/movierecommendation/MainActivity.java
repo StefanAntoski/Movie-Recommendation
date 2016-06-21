@@ -35,36 +35,23 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setLogo(R.mipmap.ic_launcher);
 
+        final Button buttonStartGenres = (Button)findViewById(R.id.buttonStartGenres);
+        buttonStartGenres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GenreActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genres_array, android.R.layout.simple_spinner_item);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-
-    Button SrcButton = (Button)findViewById(R.id.MainSearch);
-        if (SrcButton != null) {
-            SrcButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!spinner.getSelectedItem().toString().equals("Select genre")) {
-                        Genre = spinner.getSelectedItem().toString();
-
-                        Intent intent = new Intent(MainActivity.this, TestCards.class);
-                        startActivity(intent);
-
-                    }
-                }
-            });
-        }
-
-        Intent in  = new Intent(MainActivity.this,SettingsActivity.class);
-        startActivity(in);
-
-
-
+        final Button buttonStartSettings = (Button)findViewById(R.id.buttonStartSettings);
+        buttonStartSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override()

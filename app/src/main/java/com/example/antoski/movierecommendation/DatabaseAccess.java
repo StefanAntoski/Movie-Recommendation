@@ -158,4 +158,13 @@ public class DatabaseAccess {
         cursor.close();
         return res;
     }
+
+    public void resetDatabase() {
+        String sqlCommand = "update MoviesDB " +
+                "set recommend=0";
+        database.execSQL(sqlCommand);
+
+        sqlCommand = "delete from MoviesLiked";
+        database.execSQL(sqlCommand);
+    }
 }

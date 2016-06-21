@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class TestCards extends AppCompatActivity {
 
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(MyContext);
         databaseAccess.open();
-        List<Film> film = databaseAccess.recommendMoviesByGenre(MainActivity.getGenre());
+        List<Film> film = databaseAccess.recommendMoviesByGenre(GenreActivity.Genre);
 
         for(int i=0;i<film.size();i++)
         {
@@ -71,7 +72,7 @@ public class TestCards extends AppCompatActivity {
 
 
         }
-    databaseAccess.close();
+        databaseAccess.close();
 
 
         LinkDoSlikaString = null;
@@ -191,7 +192,7 @@ public class TestCards extends AppCompatActivity {
 
             ((TextView) v.findViewById(R.id.textViewPlot)).setText("A former Special Forces operative turned mercenary is subjected to a rogue experiment that leaves him with accelerated healing powers, adopting the alter ego Deadpool.");
 
-            Button buttonLike = (Button)v.findViewById(R.id.buttonLike);
+            final Button buttonLike = (Button)v.findViewById(R.id.buttonLike);
             buttonLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -204,10 +205,11 @@ public class TestCards extends AppCompatActivity {
                     Toast.makeText(MyContext, "Liked Movie", Toast.LENGTH_LONG).show();
 
                     databaseAccess.close();
+                    buttonLike.setEnabled(false);
                 }
             });
 
-            Button buttonDisLike = (Button)v.findViewById(R.id.buttonDislike);
+            final Button buttonDisLike = (Button)v.findViewById(R.id.buttonDislike);
             buttonDisLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -219,16 +221,17 @@ public class TestCards extends AppCompatActivity {
                     Toast.makeText(MyContext, "Disliked Movie", Toast.LENGTH_LONG).show();
 
                     databaseAccess.close();
+                    buttonDisLike.setEnabled(false);
                 }
             });
 
-            v.setOnClickListener(new View.OnClickListener() {
+            /*v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String item = (String)getItem(pos);
                     Log.i("TestCards", item);
                 }
-            });
+            });*/
 
             return v;
         }
@@ -236,9 +239,6 @@ public class TestCards extends AppCompatActivity {
 
 
     public class JSONTask extends AsyncTask<URL,String,String> {
-
-
-        private MainActivity PristapiZanr;
 
         private DatabaseAccess databaseAccess;
         @Override
@@ -251,9 +251,8 @@ public class TestCards extends AppCompatActivity {
             HttpURLConnection connection = null;
             List<Film> films;
           //
-           String zanr =  MainActivity.getGenre();
 
-            films = databaseAccess.recommendMoviesByGenre(zanr);
+            films = databaseAccess.recommendMoviesByGenre(GenreActivity.Genre);
             for(int i = 0; i < films.size(); i++) {
                 idd[i] = films.get(i).id;
             }
