@@ -142,18 +142,20 @@ public class DatabaseAccess {
         database.execSQL(sqlCommand);
     }
 
-    /*public List<Film> getLikedMovies() {
+    public List<Film> getLikedMovies() {
         List<Film> res = new ArrayList<>();
         String sqlCommand = "select * " +
                 "from MoviesLiked";
         Cursor cursor = database.rawQuery(sqlCommand, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Film film = new Film(cursor.getString(0), cursor.getString(1), cursor.getInt(2));
+            Film film = new Film();
+            film.id = cursor.getString(0);
+            film.name = cursor.getString(1);
             res.add(film);
             cursor.moveToNext();
         }
         cursor.close();
         return res;
-    }*/
+    }
 }

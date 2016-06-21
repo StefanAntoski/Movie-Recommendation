@@ -50,22 +50,6 @@ public class TestCards extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_cards);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setLogo(R.mipmap.ic_launcher);
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         MyContext = this;
 
@@ -74,7 +58,7 @@ public class TestCards extends AppCompatActivity {
 
         LinkDoSlika = new ArrayList<>();
 
-        final ArrayList<String> testData = new ArrayList<>();
+        final List<Film> testData = new ArrayList<>();
 
 
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(MyContext);
@@ -83,7 +67,7 @@ public class TestCards extends AppCompatActivity {
 
         for(int i=0;i<film.size();i++)
         {
-            testData.add(film.get(i).toString());
+            testData.add(film.get(i));
 
 
         }
@@ -94,14 +78,6 @@ public class TestCards extends AppCompatActivity {
         URL urll = null;
         String ProbaUrl = null;
         new JSONTask().execute(urll);
-
-        Button button = (Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                testData.add(Integer.toString(n++));
-            }
-        });
 
         while(LinkDoSlikaString == null){
 
@@ -162,12 +138,12 @@ public class TestCards extends AppCompatActivity {
 
     public class SwipeDeckAdapter extends BaseAdapter {
 
-        private List<String> data;
+        private List<Film> data;
         private List<String> url;
         private Context context;
         private int pos;
         private SwipeDeck deck;
-        public SwipeDeckAdapter(List<String> data, Context context, List<String> url, SwipeDeck deck) {
+        public SwipeDeckAdapter(List<Film> data, Context context, List<String> url, SwipeDeck deck) {
             this.data = data;
             this.context = context;
             this.url = url;
@@ -200,7 +176,9 @@ public class TestCards extends AppCompatActivity {
                 // normally use a viewholder
                 v = inflater.inflate(R.layout.test_card, parent, false);
             }
-            ((TextView) v.findViewById(R.id.textView2)).setText(data.get(pos));
+            final Film film = data.get(position);
+
+            ((TextView) v.findViewById(R.id.textView2)).setText(film.name);
 
             ImageView slikaa = (ImageView)v.findViewById(R.id.PosterSlika);
 
@@ -211,7 +189,38 @@ public class TestCards extends AppCompatActivity {
             // slikaa.setImageResource(R.drawable.moviepalsplash);
             Picasso.with(getApplicationContext()).load(url.get(pos)).error(R.mipmap.ic_launcher).placeholder(R.drawable.moviepalsplash).fit().into(slikaa);
 
+            ((TextView) v.findViewById(R.id.textViewPlot)).setText("A former Special Forces operative turned mercenary is subjected to a rogue experiment that leaves him with accelerated healing powers, adopting the alter ego Deadpool.");
 
+            Button buttonLike = (Button)v.findViewById(R.id.buttonLike);
+            buttonLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(MyContext);
+                    databaseAccess.open();
+
+                    databaseAccess.setRecommended(film.id);
+                    databaseAccess.insertMovieLiked(film.id, film.name);
+
+                    Toast.makeText(MyContext, "Liked Movie", Toast.LENGTH_LONG).show();
+
+                    databaseAccess.close();
+                }
+            });
+
+            Button buttonDisLike = (Button)v.findViewById(R.id.buttonDislike);
+            buttonDisLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(MyContext);
+                    databaseAccess.open();
+
+                    databaseAccess.setRecommended(film.id);
+
+                    Toast.makeText(MyContext, "Disliked Movie", Toast.LENGTH_LONG).show();
+
+                    databaseAccess.close();
+                }
+            });
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
