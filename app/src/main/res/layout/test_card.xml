@@ -20,11 +20,12 @@
             android:text="Large Text"
             android:textAlignment="center"
             android:id="@+id/textView2"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"/>
 
         <ImageView
-            android:layout_width="260dp"
-            android:layout_height="350dp"
+            android:layout_width="200dp"
+            android:layout_height="300dp"
             android:scaleType="fitXY"
             android:id="@+id/PosterSlika"
             android:layout_gravity="center_horizontal" />
@@ -32,12 +33,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="2dp">
 
             <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/buttonLike"
                 android:background="@drawable/like_picture" />
@@ -47,15 +48,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
                 android:id="@+id/textViewPlot" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginRight="5dp"
                 android:id="@+id/buttonDislike"
                 android:background="@drawable/dislike_picture" />

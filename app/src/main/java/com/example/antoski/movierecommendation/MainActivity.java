@@ -52,6 +52,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        final Button buttonExit = (Button)findViewById(R.id.buttonExit);
+        buttonExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        final Button buttonStartMoviesLiked = (Button)findViewById(R.id.buttonStartMoviesLiked);
+        buttonStartMoviesLiked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MoviesLikedActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override()

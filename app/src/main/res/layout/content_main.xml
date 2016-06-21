@@ -10,26 +10,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.antoski.movierecommendation.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:background="#ac1a1b">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/moviep" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Recommend Movies by Genre"
         android:id="@+id/buttonStartGenres"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:background="#ff0000"
-        android:textColor="#ffffff" />
+        android:background="#ffc258"
+        android:textColor="#000000"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginTop="30dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Settings"
         android:id="@+id/buttonStartSettings"
+        android:layout_below="@+id/buttonStartMoviesLiked"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#314254"
+        android:textColor="#ffffff"
+        android:layout_marginTop="5dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Liked Movies"
+        android:id="@+id/buttonStartMoviesLiked"
+        android:background="#ffc258"
         android:layout_below="@+id/buttonStartGenres"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        android:id="@+id/buttonExit"
+        android:layout_below="@+id/buttonStartSettings"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#314254"
+        android:textColor="#ffffff"
+        android:layout_marginTop="5dp"/>
 </RelativeLayout>

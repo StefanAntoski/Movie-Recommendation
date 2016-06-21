@@ -179,7 +179,7 @@ public class TestCards extends AppCompatActivity {
             }
             final Film film = data.get(position);
 
-            ((TextView) v.findViewById(R.id.textView2)).setText(film.name);
+            ((TextView) v.findViewById(R.id.textView2)).setText(film.name + " (" + film.year + ")");
 
             ImageView slikaa = (ImageView)v.findViewById(R.id.PosterSlika);
 
@@ -193,6 +193,8 @@ public class TestCards extends AppCompatActivity {
             ((TextView) v.findViewById(R.id.textViewPlot)).setText("A former Special Forces operative turned mercenary is subjected to a rogue experiment that leaves him with accelerated healing powers, adopting the alter ego Deadpool.");
 
             final Button buttonLike = (Button)v.findViewById(R.id.buttonLike);
+            final Button buttonDisLike = (Button)v.findViewById(R.id.buttonDislike);
+
             buttonLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -202,14 +204,14 @@ public class TestCards extends AppCompatActivity {
                     databaseAccess.setRecommended(film.id);
                     databaseAccess.insertMovieLiked(film.id, film.name);
 
-                    Toast.makeText(MyContext, "Liked Movie", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyContext, "Liked Movie", Toast.LENGTH_SHORT).show();
 
                     databaseAccess.close();
                     buttonLike.setEnabled(false);
+                    buttonDisLike.setEnabled(false);
                 }
             });
 
-            final Button buttonDisLike = (Button)v.findViewById(R.id.buttonDislike);
             buttonDisLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -218,9 +220,10 @@ public class TestCards extends AppCompatActivity {
 
                     databaseAccess.setRecommended(film.id);
 
-                    Toast.makeText(MyContext, "Disliked Movie", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyContext, "Disliked Movie", Toast.LENGTH_SHORT).show();
 
                     databaseAccess.close();
+                    buttonLike.setEnabled(false);
                     buttonDisLike.setEnabled(false);
                 }
             });

@@ -142,16 +142,21 @@ public class DatabaseAccess {
         database.execSQL(sqlCommand);
     }
 
+    public void deleteMovieLiked(String id) {
+        String sqlCommand = "delete from MoviesLiked " +
+                "where id='" + id + "'";
+        database.execSQL(sqlCommand);
+    }
+
     public List<Film> getLikedMovies() {
         List<Film> res = new ArrayList<>();
-        String sqlCommand = "select * " +
-                "from MoviesLiked";
+        String sqlCommand = "select MoviesDB.id, MoviesDB.name, MoviesDB.year " +
+                "from MoviesDB, MoviesLiked " +
+                "where MoviesDB.id=MoviesLiked.id";
         Cursor cursor = database.rawQuery(sqlCommand, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Film film = new Film();
-            film.id = cursor.getString(0);
-            film.name = cursor.getString(1);
+            Film film = new Film(cursor.getString(0), cursor.getString(1), cursor.getInt(2));
             res.add(film);
             cursor.moveToNext();
         }
