@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Splash"
-            android:label="@string/app_name"
+            android:label="@string/MoviePal_Label"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme.Splash">
             <intent-filter>
@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ReportProblem"
-            android:label="@string/action_settings"
+            android:label="@string/ReportProblem_hint"
             android:screenOrientation="portrait" />
         <activity
             android:name=".TestCards"
@@ -38,11 +38,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SettingsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/Settings_Label"/>
         <activity
             android:name=".GenreActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".MoviesLikedActivity"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/SearchByGenre_Label"/>
+        <activity android:name=".MoviesLikedActivity"
+            android:label="@string/LikedLabel"/>
     </application>
 
 </manifest>

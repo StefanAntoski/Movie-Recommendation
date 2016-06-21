@@ -2,6 +2,11 @@
     <string name="app_name">Movie Pal</string>
     <string name="action_settings">Report a problem</string>
     <string name="ReportProblem_hint">Describe the problem</string>
+    <string name="MoviePal_Label">Movie Pal</string>
+    <string name="Settings_Label">Settings</string>
+    <string name="LikedLabel">Your liked movies</string>
+
+    <string name="SearchByGenre_Label">Search by genre</string>
     <string-array name="genres_array">
         <item>Select genre</item>
         <item>Adventure</item>

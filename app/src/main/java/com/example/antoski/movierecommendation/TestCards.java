@@ -47,6 +47,8 @@ public class TestCards extends AppCompatActivity {
     public int n = 0;
     public String LinkDoSlikaString;
     public List<String> LinkDoSlika;
+    public List<String> PlotTwist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,7 @@ public class TestCards extends AppCompatActivity {
 
         final List<Film> testData = new ArrayList<>();
 
-
+        PlotTwist = new ArrayList<>();
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(MyContext);
         databaseAccess.open();
         List<Film> film = databaseAccess.recommendMoviesByGenre(GenreActivity.Genre);
@@ -190,7 +192,7 @@ public class TestCards extends AppCompatActivity {
             // slikaa.setImageResource(R.drawable.moviepalsplash);
             Picasso.with(getApplicationContext()).load(url.get(pos)).error(R.mipmap.ic_launcher).placeholder(R.drawable.moviepalsplash).fit().into(slikaa);
 
-            ((TextView) v.findViewById(R.id.textViewPlot)).setText("A former Special Forces operative turned mercenary is subjected to a rogue experiment that leaves him with accelerated healing powers, adopting the alter ego Deadpool.");
+            ((TextView) v.findViewById(R.id.textViewPlot)).setText(PlotTwist.get(pos));
 
             final Button buttonLike = (Button)v.findViewById(R.id.buttonLike);
             final Button buttonDisLike = (Button)v.findViewById(R.id.buttonDislike);
@@ -286,8 +288,9 @@ public class TestCards extends AppCompatActivity {
                     String finalJson = buffer.toString();
                     JSONObject parentObject = new JSONObject(finalJson);
                     String IzvadenoOdJsonURL = parentObject.getString("Poster");
+                    String IzvadenPlot = parentObject.getString("Plot");
                     LinkDoSlika.add(i,IzvadenoOdJsonURL);
-
+                    PlotTwist.add(i,IzvadenPlot);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
