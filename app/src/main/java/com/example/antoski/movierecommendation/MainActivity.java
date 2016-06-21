@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        Intent in  = new Intent(MainActivity.this,SettingsActivity.class);
+        startActivity(in);
+
+
 
     }
 
