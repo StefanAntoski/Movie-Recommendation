@@ -206,7 +206,7 @@ public class TestCards extends AppCompatActivity {
                     databaseAccess.setRecommended(film.id);
                     databaseAccess.insertMovieLiked(film.id, film.name);
 
-                    Toast.makeText(MyContext, "Liked Movie", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyContext, R.string.MovieLikedToast, Toast.LENGTH_SHORT).show();
 
                     databaseAccess.close();
                     buttonLike.setEnabled(false);
@@ -222,7 +222,7 @@ public class TestCards extends AppCompatActivity {
 
                     databaseAccess.setRecommended(film.id);
 
-                    Toast.makeText(MyContext, "Disliked Movie", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyContext, R.string.MovieDislikedToast, Toast.LENGTH_SHORT).show();
 
                     databaseAccess.close();
                     buttonLike.setEnabled(false);

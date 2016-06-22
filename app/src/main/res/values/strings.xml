@@ -13,6 +13,8 @@
     <string name="MyLM">My Liked Movies</string>
     <string name="izgasi">Exit</string>
 
+    <string name="MovieLikedToast">Liked Movie</string>
+    <string name="MovieDislikedToast">Disliked Movie</string>
 
     <string name="SearchMoviess">Search Movies</string>
 

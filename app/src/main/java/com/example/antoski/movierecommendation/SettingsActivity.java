@@ -91,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 android.content.res.Configuration conf = res.getConfiguration();
 
                                 conf.locale = new Locale("mk");
-                               // Toast.makeText(SettingsActivity.this,"Македонски",Toast.LENGTH_LONG).show();
+                                // Toast.makeText(SettingsActivity.this,"Македонски",Toast.LENGTH_LONG).show();
                                 res.updateConfiguration(conf,dm);
                                 return false;
 
@@ -105,7 +105,29 @@ public class SettingsActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else if(position == 3){
+                    new AlertDialog.Builder(SettingsActivity.this)
+                            .setTitle("About us")
+                            .setMessage("Movie Pal is the best pal for movie recommendation who helps you when you don't know what movie you should watch. " +
+                                    "This application was made by 3 FINKI students:" +
+                                    "\nStefan Antoski\nPetar Krstevski\nViktor Spasovski\n" +
+                                    "We are very grateful for using our application.")
+                            .setPositiveButton("Like us on facebook", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DatabaseAccess databaseAccess = DatabaseAccess.getInstance(SettingsActivity.this);
+                                    databaseAccess.open();
 
+                                    databaseAccess.resetDatabase();
+
+                                    databaseAccess.close();
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
                 }
             }
         });

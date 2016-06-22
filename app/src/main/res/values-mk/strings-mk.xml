@@ -13,6 +13,13 @@
     <string name="MyLM">Мои посакувани филмови</string>
     <string name="izgasi">Излези</string>
 
+    <string name="MovieLikedToast">Допаднат филм</string>
+    <string name="MovieDislikedToast">Не ми се допаѓа филмот</string>
+
+    <string name="SettingsReset">Ресетирај</string>
+    <string name="SettingsLanguage">Одбери јазик</string>
+    <string name="SettingsReport">Пријави проблем</string>
+    <string name="SettingsAbout">За нас</string>
 
     <string name="SearchMoviess">Пребарувај филмови</string>
 
