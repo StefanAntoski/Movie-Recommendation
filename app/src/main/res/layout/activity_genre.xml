@@ -21,7 +21,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search Movies"
+        android:text="@string/SearchMoviess"
         android:id="@+id/buttonSearchMovies"
         android:background="#314254"
         android:textColor="#ffffff"

@@ -22,7 +22,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recommend Movies by Genre"
+        android:text="@string/RecMov"
         android:id="@+id/buttonStartGenres"
         android:background="#ffc258"
         android:textColor="#000000"
@@ -32,7 +32,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Settings"
+        android:text="@string/Settings_Label"
         android:id="@+id/buttonStartSettings"
         android:layout_below="@+id/buttonStartMoviesLiked"
         android:layout_alignParentRight="true"
@@ -44,7 +44,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Liked Movies"
+        android:text="@string/MyLM"
         android:id="@+id/buttonStartMoviesLiked"
         android:background="#ffc258"
         android:layout_below="@+id/buttonStartGenres"
@@ -55,7 +55,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Exit"
+        android:text="@string/izgasi"
         android:id="@+id/buttonExit"
         android:layout_below="@+id/buttonStartSettings"
         android:layout_alignParentRight="true"

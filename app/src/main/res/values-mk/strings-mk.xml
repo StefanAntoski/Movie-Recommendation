@@ -1,20 +1,20 @@
 <resources>
     <string name="app_name">Movie Pal</string>
-    <string name="action_settings">Report a problem</string>
-    <string name="ReportProblem_hint">Describe the problem</string>
+    <string name="action_settings">Пријави проблем</string>
+    <string name="ReportProblem_hint">Опиши го проблемот</string>
     <string name="MoviePal_Label">Movie Pal</string>
-    <string name="Settings_Label">Settings</string>
-    <string name="LikedLabel">Your liked movies</string>
+    <string name="Settings_Label">Поставки</string>
+    <string name="LikedLabel">Посакувани филмови</string>
     <string name="english">English</string>
     <string name ="macedonian">Македонски</string>
-    <string name="SearchByGenre_Label">Search by genre</string>
+    <string name="SearchByGenre_Label">Пребарувај по жанр</string>
 
-    <string name ="RecMov">Recommend Movies by Genre</string>
-    <string name="MyLM">My Liked Movies</string>
-    <string name="izgasi">Exit</string>
+    <string name ="RecMov">Препорака на филмови по жанр</string>
+    <string name="MyLM">Мои посакувани филмови</string>
+    <string name="izgasi">Излези</string>
 
 
-    <string name="SearchMoviess">Search Movies</string>
+    <string name="SearchMoviess">Пребарувај филмови</string>
 
     <string-array name="genres_array">
         <item>Select genre</item>
@@ -36,5 +36,5 @@
         <item>Sport</item>
     </string-array>
     <string name="title_activity_test_cards">TestCards</string>
-    <string name="MainSearchText">Search</string>
+    <string name="MainSearchText">Пребарувај</string>
 </resources>
